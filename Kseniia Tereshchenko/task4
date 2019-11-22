@@ -1,0 +1,30 @@
+#Structure 
+> class(weather)
+> dim(weather)
+> names(weather)  
+> str(weather)
+> summary(weather)   
+#Looking at data
+> head(weather)
+> tail(weather)
+> print(weather)
+> View(weather)
+
+#Tidy
+> as.tibble(weather)
+> weather1 <- gather(weather, key = day, value = value, X1:X31, -X)
+> View(weather1)
+
+> weather2 <- unite(weather1, col = fulldate, year, month, day)
+> View(weather2)
+
+#when I'm trying to use spread function it can't find values for some reason 
+
+#Looking for missing values
+> is.na(weather2)
+> any(is.na(weather2))
+> sum(is.na(weather2))
+> summary(weather2)
+> complete.cases(weather2)
+
+#Dealing with missing values
