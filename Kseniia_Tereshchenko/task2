@@ -10,7 +10,7 @@ myfy <- function(data, r_s, c_s){
              list1 <- append(list1, sum2)
          }
      }
-     print(list1)}
+     return(list1)}
      
 myfy(iris, 1:5, 5:1)
 [[1]]
