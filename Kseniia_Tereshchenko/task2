@@ -6,7 +6,7 @@ myfy <- function(data, r_s, c_s){
              sum1<- sum(subset[,i])
              list1 <- append(list1, sum1)
          } else {
-              um2 <- list(table(subset[,i]))
+              sum2 <- list(table(subset[,i]))
              list1 <- append(list1, sum2)
          }
      }
