@@ -1,0 +1,5 @@
+gapminder %>%
+   ggplot(aes(gdpPercap, lifeExp, color = continent))+
+   geom_point()+
+   facet_wrap(~year)
+   
