@@ -1,0 +1,5 @@
+myfy3 <- function(data, r_s, c_s){
+lapply((data[r_s, c_s]),
+ function(x)ifelse(is.numeric(x), sum(x), list(table(x)))) %>% 
+ append(list(subset=data[r_s, c_s]), 0) 
+ }
