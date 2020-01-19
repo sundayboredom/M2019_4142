@@ -1,0 +1,70 @@
+
+
+Milespergallon <- mtcars[,1]
+Numberofcylinders <- mtcars[,2]
+Displacement <- mtcars[,3]
+Grosshorsepower <- mtcars[,4]
+Realaxleratio <- mtcars[,5]
+Weight <- mtcars[,6]
+Miletime <- mtcars[,7]
+Engine <- mtcars[,8]
+Transmission <- mtcars[,9]
+Numberofgears <- mtcars[,10]
+Numberofcarburetors <- mtcars[,11]
+
+
+
+ui <- fluidPage(
+  
+    selectInput(inputId = "x",
+               label = "X-axis",
+               choices = c("Milespergallon","Displacement","Grosshorsepower","Realaxleratio","Weight","Miletime"),
+             selected = "Milespergallon"),
+          
+     selectInput(inputId="y",
+                 label="Y-axis",
+                 choices=c("Milespergallon", "Displacement", "Grosshorsepower","Realaxleratio","Weight","Miletime"),
+                 selected="Displacement"),
+     
+     selectInput(inputId = "color",
+                 label = "Color by:",
+                 choices = c("Numberofcylinders", "Engine", "Transmission", "Numberofgears", "Numberofcarburetors"),
+                 selected="Numberofcylinders"),
+     
+     sliderInput(inputId="alpha", label="Alpha:", min=0,max=1,value=0.5),
+     
+     numericInput(inputId="size",
+                  label="Dot size:",
+                  value=3,
+                  min=1, max=9),
+     
+     textInput(inputId = "title", label="Plot title:", placeholder="Enter the title"),
+     
+     checkboxInput(inputId="show_d", label="Show data?", value=FALSE),
+     
+     plotOutput(outputId="scatter"),
+     
+     tableOutput(outputId="data_selected")
+)
+
+
+server<-function(input, output){
+    
+     output$scatter <- renderPlot({
+        req(input$size)
+   ggplot(mtcars, aes_string(x = input$x, y = input$y, color = input$color))+
+   geom_point(alpha = input$alpha, size=input$size)+
+      ggtitle(tools::toTitleCase(isolate(input$title)))
+     })
+     
+     output$data_selected <- renderTable({
+        if (input$show_d) {
+           mtcars %>% select_(x=input$x, y=input$y, color=input$color)
+        }
+     })
+     
+    
+     }
+
+
+shinyApp(ui=ui, server=server)
