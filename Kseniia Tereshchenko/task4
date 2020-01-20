@@ -1,30 +1,37 @@
 #Structure 
-> class(weather)
-> dim(weather)
-> names(weather)  
-> str(weather)
-> summary(weather)   
+ class(weather)
+ dim(weather)
+ names(weather)  
+ str(weather)
+ summary(weather)   
 #Looking at data
-> head(weather)
-> tail(weather)
-> print(weather)
-> View(weather)
+ head(weather)
+ tail(weather)
+ print(weather)
+ View(weather)
+ 
+ #Tidy
+  as_tibble(weather)
+  weather1 <- gather(weather, key = day, value = value, X1:X31)
+  weather2 <- separate(weather1, day, c("X", "day"), sep=1)
+  weather3 <- weather2[,-5]
+  weather4 <- unite(weather3, col = fulldate, year, month, day)
 
-#Tidy
-> as.tibble(weather)
-> weather1 <- gather(weather, key = day, value = value, X1:X31, -X)
-> View(weather1)
+  #Looking for missing values
+   is.na(weather4)
+   any(is.na(weather4))
+   sum(is.na(weather4))
+   summary(weather4)
+   complete.cases(weather4)
+   #Dealing with missing values
+   weather5 <- na.omit(weather4)
+   #Checking
+any(is.na(weather5))
+   # Outliers/Error detection
+  summary(weather5)
+  weather6 <- spread(weather5, measure, value)
+  any(is.na(weather6))
+  weather7 <- na.omit(weather6)
+  any(is.na(weather7))
 
-> weather2 <- unite(weather1, col = fulldate, year, month, day)
-> View(weather2)
-
-#when I'm trying to use spread function it can't find values for some reason 
-
-#Looking for missing values
-> is.na(weather2)
-> any(is.na(weather2))
-> sum(is.na(weather2))
-> summary(weather2)
-> complete.cases(weather2)
-
-#Dealing with missing values
+                       
