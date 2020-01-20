@@ -16,7 +16,6 @@
   weather2 <- separate(weather1, day, c("X", "day"), sep=1)
   weather3 <- weather2[,-5]
   weather4 <- unite(weather3, col = fulldate, year, month, day)
-
   #Looking for missing values
    is.na(weather4)
    any(is.na(weather4))
@@ -26,12 +25,21 @@
    #Dealing with missing values
    weather5 <- na.omit(weather4)
    #Checking
-any(is.na(weather5))
+  any(is.na(weather5))
    # Outliers/Error detection
   summary(weather5)
   weather6 <- spread(weather5, measure, value)
   any(is.na(weather6))
   weather7 <- na.omit(weather6)
   any(is.na(weather7))
+  summary(weather7)
+  weather8 <- weather7 %>% mutate_at(vars(-Events, -fulldate), as.numeric)
+  any(is.na(weather8))
+  summary(weather8)
+  weather9 <- na.omit(weather8)
+  summary(weather9)
+  boxplot(weather9$Max.TemperatureF, horizontal = T)
+  any(is.na(weather9))
+             
 
                        
